@@ -6,25 +6,11 @@ class EmployeeDAO:
     def __init__(self, db_name="employee_db.sqlite"):
         self.conn = sqlite3.connect(db_name)
         self.cursor = self.conn.cursor()
-        self.create_table()
-
-    def create_table(self):
-        self.cursor.execute('''
-                CREATE TABLE IF NOT EXISTS employee (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    name TEXT,
-                    position TEXT,
-                    salary REAL,
-                    hire_date TEXT
-                )
-            ''')
-        self.conn.commit()
 
     def insert(self, employee: Employee):
-        self.cursor.execute('''
-            INSERT INTO employee (name, position, salary, hire_date)
-            VALUES (?, ?, ?, ?)
-        ''', (employee.name, employee.position, employee.salary, employee.hireDate))
+        self.cursor.execute("""
+            INSERT INTO employee (id, name, position, salary, hire_date)
+            VALUES (?, ?, ?, ?, ?)""", (employee.id, employee.name, employee.position, employee.salary, employee.hireDate))
         self.conn.commit()
 
     def get_by_id(self, emp_id):
@@ -40,14 +26,17 @@ class EmployeeDAO:
         return [Employee(*row) for row in rows]
 
     def update(self, employee: Employee):
-        self.cursor.execute('''
+        self.cursor.execute("""
             UPDATE employee SET name = ?, position = ?, salary = ?, hire_date = ?
-            WHERE id = ?
-        ''', (employee.name, employee.position, employee.salary, employee.hireDate, employee.employeeId))
+            WHERE id = ?""", (employee.name, employee.position, employee.salary, employee.hireDate, employee.id))
         self.conn.commit()
 
     def delete(self, emp_id):
         self.cursor.execute("DELETE FROM employee WHERE id = ?", (emp_id,))
+        self.conn.commit()
+
+    def delete_all(self):
+        self.cursor.execute("DELETE FROM employee")
         self.conn.commit()
 
     def close(self):

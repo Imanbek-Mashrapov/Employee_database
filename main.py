@@ -5,7 +5,7 @@ from employee_DAO import EmployeeDAO
 if __name__ == "__main__":
     dao = EmployeeDAO()
 
-    emp1 = Employee("Iman Mashrapov", "Data Analyst", "Software Engineer", 75000, "2024-07-07")
+    emp1 = Employee(1, "Iman Mashrapov", "Data Analyst", 75000, "2024-07-07")
     dao.insert(emp1)
     print("Employee inserted.")
 
@@ -21,7 +21,7 @@ if __name__ == "__main__":
     if emp:
         emp.name = "Jane Doe"
         dao.update(emp)
-        print("Updated employee:", dao.get_by_id(emp.employeeId))
+        print("Updated employee:", dao.get_by_id(emp.id))
 
     dao.delete(1)
     print("Deleted employee with ID 1.")
