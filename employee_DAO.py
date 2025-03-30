@@ -8,27 +8,30 @@ class EmployeeDAO:
         self.cursor = self.conn.cursor()
 
     def insert(self, employee: Employee):
-        self.cursor.execute("""
-            INSERT INTO employee (id, name, position, salary, hire_date)
-            VALUES (?, ?, ?, ?, ?)""", (employee.id, employee.name, employee.position, employee.salary, employee.hireDate))
-        self.conn.commit()
+        if self.get_by_id(employee.id):
+            print(f"Employee with id:{employee.id} already exists in database")
+        else:
+            self.cursor.execute("""
+                INSERT INTO employee (id, name, position, salary, hire_date)
+                VALUES (?, ?, ?, ?, ?)""", (employee.id, employee.name, employee.position, employee.salary, employee.hireDate))
+            self.conn.commit()
 
     def get_by_id(self, emp_id):
         self.cursor.execute("SELECT * FROM employee WHERE id = ?", (emp_id,))
-        row = self.cursor.fetchone()
-        if row:
-            return Employee(*row)
+        emp_row = self.cursor.fetchone()
+        if emp_row:
+            return Employee(*emp_row)
         return None
 
     def get_all(self):
         self.cursor.execute("SELECT * FROM employee")
         rows = self.cursor.fetchall()
-        return [Employee(*row) for row in rows]
+        return [Employee(*x) for x in rows]
 
-    def update(self, employee: Employee):
+    def update(self, id, employee: Employee):
         self.cursor.execute("""
             UPDATE employee SET name = ?, position = ?, salary = ?, hire_date = ?
-            WHERE id = ?""", (employee.name, employee.position, employee.salary, employee.hireDate, employee.id))
+            WHERE id = ?""", (employee.name, employee.position, employee.salary, employee.hireDate, id))
         self.conn.commit()
 
     def delete(self, emp_id):

@@ -19,8 +19,8 @@ class TestEmployeeDAO(unittest.TestCase):
         self.emp_dao.cursor.execute("DELETE FROM employee")
         self.emp_dao.conn.commit()
         self.emp1 = Employee(1, "Iman Mashrapov", "Data Analyst", 75000, "2021-05-03")
-        self.emp2 = Employee(None, "Ruslan Talgatov", "Project Manager", 70000, "2022-03-30")
-        self.emp3 = Employee(None, "Sanjar Amirov", "Police officer", 90000, "2010-01-25")
+        self.emp2 = Employee(2, "Ruslan Talgatov", "Project Manager", 70000, "2022-03-30")
+        self.emp3 = Employee(3, "Sanjar Amirov", "Police officer", 90000, "2010-01-25")
 
     def test_insert(self):
         self.emp_dao.insert(self.emp1)
