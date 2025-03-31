@@ -15,6 +15,7 @@ class EmployeeDAO:
                 INSERT INTO employee (id, name, position, salary, hire_date)
                 VALUES (?, ?, ?, ?, ?)""", (employee.id, employee.name, employee.position, employee.salary, employee.hireDate))
             self.conn.commit()
+            print('Employee added')
 
     def get_by_id(self, emp_id):
         self.cursor.execute("SELECT * FROM employee WHERE id = ?", (emp_id,))

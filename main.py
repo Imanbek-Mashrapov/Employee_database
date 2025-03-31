@@ -23,7 +23,6 @@ if __name__ == "__main__":
                 emp_id, name, position, salary, hire_date = emp_info.split(", ")
                 emp = Employee(int(emp_id), name, position, float(salary), hire_date)
                 dao.insert(emp)
-                print('Employee added')
             except Exception as e:
                 print(f"Oops, Error: {e}")
 
