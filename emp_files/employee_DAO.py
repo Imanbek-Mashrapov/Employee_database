@@ -1,4 +1,4 @@
-from employee_class import Employee
+from emp_files.employee_class import Employee
 import sqlite3
 
 

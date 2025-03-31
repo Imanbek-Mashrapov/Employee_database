@@ -1,6 +1,6 @@
 import unittest
-from employee_class import Employee
-from employee_DAO import EmployeeDAO
+from emp_files.employee_class import Employee
+from emp_files.employee_DAO import EmployeeDAO
 
 
 class TestEmployee(unittest.TestCase):
